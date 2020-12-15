@@ -9,7 +9,7 @@ input.dir<-args[[1]]
 filt.file.list<-list.files(path=input.dir, pattern="*filt*", full.names = TRUE)
 print(filt.file.list)
 
-#wl.file.list<-list.files(path=input.dir, pattern="*wl*", full.names=TRUE)
+wl.file.list<-list.files(path=input.dir, pattern="*wl*", full.names=TRUE)
 #wl.file.list<-args[[2]]
 
 
@@ -69,5 +69,58 @@ wide.form<-merge(x=wide.form.fixed, y=wide.form.samp, by="CHROM_POS_REF_ALT")
 
 write.table(long.form, file=args[2], row.names = FALSE, quote = FALSE, sep="\t")
 write.table(wide.form, file=args[3], row.names = FALSE, quote = FALSE, sep="\t")
+
+for( i in 1:length(wl.file.list)){
+  print(i)
+  curr.samp<-read.table(wl.file.list[i], header=TRUE, sep="\t")
+  
+  
+  #long form - just concatenate all rows, each row represents one sample-variant pair
+  if(exists("wl.long.form")){
+    wl.long.form<-rbind(wl.long.form, curr.samp)
+  }
+  if(!(exists("wl.long.form"))){
+    wl.long.form<-curr.samp
+  }  
+  
+  
+  #wide form - merge variants - each row represents one variants and each sample has their own columns (nCallers, AF, depth)
+  if(exists("wl.wide.form.fixed")){
+    
+    fixed<-curr.samp[,1:139]
+    samp<-cbind(curr.samp$CHROM_POS_REF_ALT, curr.samp[,grepl("nCallers|afMax|dpMax", colnames(curr.samp))])
+    id<-curr.samp$Sample_ID[1]
+    
+    colnames(samp)[1]<-"CHROM_POS_REF_ALT"
+    colnames(samp)[2:4]<-paste(id, colnames(samp[,2:4]))
+    
+    wl.wide.form.fixed<-unique(rbind(wl.wide.form.fixed, fixed))
+    
+    wl.wide.form.samp<-merge(x=wl.wide.form.samp, y=samp, by="CHROM_POS_REF_ALT", all.x=TRUE, all.y=TRUE)
+    
+  }
+  if(!(exists("wl.wide.form.fixed"))){
+    
+    wl.wide.form.fixed<-curr.samp[,1:139]
+    samp<-cbind(curr.samp$CHROM_POS_REF_ALT, curr.samp[,grepl("nCallers|afMax|dpMax", colnames(curr.samp))])
+    id<-curr.samp$Sample_ID[1]
+    
+    colnames(samp)[1]<-"CHROM_POS_REF_ALT"
+    colnames(samp)[2:4]<-paste(id, colnames(samp[,2:4]))
+    
+    wl.wide.form.samp<-samp
+  }  
+  
+  
+}
+
+wl.wide.form.fixed<-wl.wide.form.fixed[order(wl.wide.form.fixed$CHROM_POS_REF_ALT),]
+wl.wide.form.samp<-wl.wide.form.samp[order(wl.wide.form.samp$CHROM_POS_REF_ALT),]
+
+wl.wide.form<-merge(x=wl.wide.form.fixed, y=wl.wide.form.samp, by="CHROM_POS_REF_ALT")
+
+write.table(wl.long.form, file=args[4], row.names = FALSE, quote = FALSE, sep="\t")
+write.table(wl.wide.form, file=args[5], row.names = FALSE, quote = FALSE, sep="\t")
+
 
 
