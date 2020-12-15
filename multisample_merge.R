@@ -14,6 +14,9 @@ print(filt.file.list)
 for( i in 1:length(filt.file.list)){
   print(i)
   curr.samp<-read.table(paste0("/data/",filt.file.list[i]), header=TRUE, sep="\t")
+  
+  #### FOR TESTING PURPOSES ONLY ####
+  curr.samp<-cbind(curr.samp[,1:200], curr.samp[,207])
     
   #long form - just concatenate all rows, each row represents one sample-variant pair
   if(!(exists("long.form"))){
