@@ -7,10 +7,12 @@ args = commandArgs(trailingOnly=TRUE)
 input.dir<-args[[1]]
 
 filt.file.list<-list.files(path=input.dir, pattern="*filt*")
+print(filt.file.list)
 #wl.file.list<-args[[2]]
 
 
 for( i in 1:length(filt.file.list)){
+  print(i)
   curr.samp<-read.table(filt.file.list[1], header=TRUE, sep="\t")
     
   #long form - just concatenate all rows, each row represents one sample-variant pair
