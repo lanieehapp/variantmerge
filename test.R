@@ -1,12 +1,6 @@
-library("optparse")
+args = commandArgs(trailingOnly=TRUE)
 
-option_list = list(
-  make_option(c("-f", "--filt"), type="character", default=NULL)
-)
+input.dir<-args[[1]]
+filt.file.list<-list.files(path=input.dir, pattern="*filt*")
 
-
-opt_parser=OptionParser(option_list=option_list)
-opt=parse_args(opt_parser)
-
-
-print(opt)
+print(filt.file.list)
