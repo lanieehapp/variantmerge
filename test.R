@@ -1,7 +1,7 @@
 library("optparse")
 
 option_list = list(
-  make_option(c("-f", "--filt"), type="list", default=NULL)
+  make_option(c("-f", "--filt"), type="character", default=NULL)
 )
 
 
