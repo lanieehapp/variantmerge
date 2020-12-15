@@ -1,9 +1,12 @@
 
 #multisample variant calling merger
 
+
 args = commandArgs(trailingOnly=TRUE)
 
-filt.file.list<-args[[1]]
+input.dir<-args[[1]]
+
+filt.file.list<-list.files(path=input.dir, pattern="*filt*")
 #wl.file.list<-args[[2]]
 
 
