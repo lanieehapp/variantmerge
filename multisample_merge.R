@@ -17,7 +17,7 @@ for( i in 1:length(filt.file.list)){
   print(i)
   curr.samp<-read.table(filt.file.list[i], header=TRUE, sep="\t")
   
-  colnames(curr.samp)[1]<-"CHROM_POS_REF_ALT"
+ 
     
   #long form - just concatenate all rows, each row represents one sample-variant pair
   if(exists("long.form")){
@@ -46,11 +46,11 @@ for( i in 1:length(filt.file.list)){
    if(!(exists("wide.form.fixed"))){
     
     wide.form.fixed<-curr.samp[,1:139]
-    samp<-cbind(curr.samp$CHROM_POS_REF_ALT, curr.samp[,grepl("nCallers|afMax|dpMax|RNA_|DNA_", colnames(curr.samp))])
+    samp<-cbind(curr.samp$CHROM_POS_REF_ALT, curr.samp[,grepl("nCallers|afMax|dpMax", colnames(curr.samp))])
     id<-curr.samp$Sample_ID[1]
     
     colnames(samp)[1]<-"CHROM_POS_REF_ALT"
-    colnames(samp)[2:10]<-paste(id, colnames(samp[,2:10]))
+    colnames(samp)[2:4]<-paste(id, colnames(samp[,2:4]))
     
     wide.form.samp<-samp
   }  
@@ -70,6 +70,7 @@ for( i in 1:length(wl.file.list)){
   print(i)
   curr.samp<-read.delim(wl.file.list[i], header=TRUE, sep="\t")
   
+  colnames(curr.samp)[1]<-"CHROM_POS_REF_ALT"
   
   #long form - just concatenate all rows, each row represents one sample-variant pair
   if(exists("wl.long.form")){
@@ -84,11 +85,11 @@ for( i in 1:length(wl.file.list)){
   if(exists("wl.wide.form.fixed")){
     
     fixed<-curr.samp[,1:139]
-    samp<-cbind(curr.samp$CHROM_POS_REF_ALT, curr.samp[,grepl("nCallers|afMax|dpMax", colnames(curr.samp))])
+    samp<-cbind(curr.samp$CHROM_POS_REF_ALT, curr.samp[,grepl("nCallers|afMax|dpMax|RNA_|DNA_", colnames(curr.samp))])
     id<-curr.samp$Sample_ID[1]
     
     colnames(samp)[1]<-"CHROM_POS_REF_ALT"
-    colnames(samp)[2:4]<-paste(id, colnames(samp[,2:4]))
+    colnames(samp)[2:10]<-paste(id, colnames(samp[,2:10]))
     
     wl.wide.form.fixed<-unique(rbind(wl.wide.form.fixed, fixed))
     
@@ -98,11 +99,11 @@ for( i in 1:length(wl.file.list)){
   if(!(exists("wl.wide.form.fixed"))){
     
     wl.wide.form.fixed<-curr.samp[,1:139]
-    samp<-cbind(curr.samp$CHROM_POS_REF_ALT, curr.samp[,grepl("nCallers|afMax|dpMax", colnames(curr.samp))])
+    samp<-cbind(curr.samp$CHROM_POS_REF_ALT, curr.samp[,grepl("nCallers|afMax|dpMax|RNA_|DNA_", colnames(curr.samp))])
     id<-curr.samp$Sample_ID[1]
     
     colnames(samp)[1]<-"CHROM_POS_REF_ALT"
-    colnames(samp)[2:4]<-paste(id, colnames(samp[,2:4]))
+    colnames(samp)[2:10]<-paste(id, colnames(samp[,2:10]))
     
     wl.wide.form.samp<-samp
   }  
