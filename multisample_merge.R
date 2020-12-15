@@ -17,7 +17,7 @@ for( i in 1:length(filt.file.list)){
   
   #### FOR TESTING PURPOSES ONLY ####
   curr.samp<-cbind(curr.samp[,1:200], curr.samp[,207])
-  colnames(curr.samp[201])<-"Sample_ID"
+  colnames(curr.samp)[201]<-"Sample_ID"
   ###################################
   
     
