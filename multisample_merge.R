@@ -10,6 +10,7 @@ filt.file.list<-list.files(path=input.dir, pattern="*filt*", full.names = TRUE)
 print(filt.file.list)
 
 wl.file.list<-list.files(path=input.dir, pattern="*wl*", full.names=TRUE)
+print(wl.file.list)
 #wl.file.list<-args[[2]]
 
 
