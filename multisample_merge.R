@@ -17,6 +17,9 @@ for( i in 1:length(filt.file.list)){
   
   #### FOR TESTING PURPOSES ONLY ####
   curr.samp<-cbind(curr.samp[,1:200], curr.samp[,207])
+  colnames(curr.samp[201])<-"Sample_ID"
+  ###################################
+  
     
   #long form - just concatenate all rows, each row represents one sample-variant pair
   if(!(exists("long.form"))){
@@ -27,7 +30,7 @@ for( i in 1:length(filt.file.list)){
   }
   
   #wide form - merge variants - each row represents one variants and each sample has their own columns (nCallers, AF, depth)
-  if(!(exists("wide.form"))){
+  if(!(exists("wide.form.fixed"))){
     
     wide.form.fixed<-curr.samp[,1:139]
     samp<-cbind(curr.samp$CHROM_POS_REF_ALT, curr.samp[,grepl("nCallers|afMax|dpMax", colnames(curr.samp))])
@@ -38,7 +41,7 @@ for( i in 1:length(filt.file.list)){
     
     wide.form.samp<-samp
   }  
-  if(exists("wide.form")){
+  if(exists("wide.form.fixed")){
     
     fixed<-curr.samp[,1:139]
     samp<-cbind(curr.samp$CHROM_POS_REF_ALT, curr.samp[,grepl("nCallers|afMax|dpMax", colnames(curr.samp))])
