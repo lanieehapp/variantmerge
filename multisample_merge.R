@@ -46,11 +46,11 @@ for( i in 1:length(filt.file.list)){
    if(!(exists("wide.form.fixed"))){
     
     wide.form.fixed<-curr.samp[,1:139]
-    samp<-cbind(curr.samp$CHROM_POS_REF_ALT, curr.samp[,grepl("nCallers|afMax|dpMax", colnames(curr.samp))])
+    samp<-cbind(curr.samp$CHROM_POS_REF_ALT, curr.samp[,grepl("nCallers|afMax|dpMax|RNA_|DNA_", colnames(curr.samp))])
     id<-curr.samp$Sample_ID[1]
     
     colnames(samp)[1]<-"CHROM_POS_REF_ALT"
-    colnames(samp)[2:4]<-paste(id, colnames(samp[,2:4]))
+    colnames(samp)[2:10]<-paste(id, colnames(samp[,2:10]))
     
     wide.form.samp<-samp
   }  
