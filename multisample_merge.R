@@ -72,7 +72,7 @@ write.table(wide.form, file=args[3], row.names = FALSE, quote = FALSE, sep="\t")
 
 for( i in 1:length(wl.file.list)){
   print(i)
-  curr.samp<-read.table(wl.file.list[i], header=TRUE, sep="\t")
+  curr.samp<-read.delim(wl.file.list[i], header=TRUE, sep="\t")
   
   
   #long form - just concatenate all rows, each row represents one sample-variant pair
