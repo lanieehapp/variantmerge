@@ -6,10 +6,10 @@ args = commandArgs(trailingOnly=TRUE)
 
 input.dir<-args[[1]]
 
-filt.file.list<-list.files(path=input.dir, pattern="*filt*", full.names = TRUE)
+filt.file.list<-list.files(path=input.dir, pattern="*filt_*", full.names = TRUE)
 print(filt.file.list)
 
-wl.file.list<-list.files(path=input.dir, pattern="*_wl*", full.names=TRUE)
+wl.file.list<-list.files(path=input.dir, pattern="*wl_*", full.names=TRUE)
 print(wl.file.list)
 #wl.file.list<-args[[2]]
 
@@ -86,11 +86,11 @@ for( i in 1:length(wl.file.list)){
   if(exists("wl.wide.form.fixed")){
     
     fixed<-curr.samp[,1:139]
-    samp<-cbind(curr.samp$CHROM_POS_REF_ALT, curr.samp[,grepl("nCallers|afMax|dpMax|RNA_|DNA_", colnames(curr.samp))])
+    samp<-cbind(curr.samp$CHROM_POS_REF_ALT, curr.samp[,grepl("nCallers|afMax|dpMax|DNA_", colnames(curr.samp))])
     id<-curr.samp$Sample_ID[1]
     
     colnames(samp)[1]<-"CHROM_POS_REF_ALT"
-    colnames(samp)[2:10]<-paste(id, colnames(samp[,2:10]))
+    colnames(samp)[2:7]<-paste(id, colnames(samp[,2:7]))
     
     wl.wide.form.fixed<-unique(rbind(wl.wide.form.fixed, fixed))
     
@@ -100,11 +100,11 @@ for( i in 1:length(wl.file.list)){
   if(!(exists("wl.wide.form.fixed"))){
     
     wl.wide.form.fixed<-curr.samp[,1:139]
-    samp<-cbind(curr.samp$CHROM_POS_REF_ALT, curr.samp[,grepl("nCallers|afMax|dpMax|RNA_|DNA_", colnames(curr.samp))])
+    samp<-cbind(curr.samp$CHROM_POS_REF_ALT, curr.samp[,grepl("nCallers|afMax|dpMax|DNA_", colnames(curr.samp))])
     id<-curr.samp$Sample_ID[1]
     
     colnames(samp)[1]<-"CHROM_POS_REF_ALT"
-    colnames(samp)[2:10]<-paste(id, colnames(samp[,2:10]))
+    colnames(samp)[2:7]<-paste(id, colnames(samp[,2:7]))
     
     wl.wide.form.samp<-samp
   }  
