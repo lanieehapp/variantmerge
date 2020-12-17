@@ -6,10 +6,10 @@ args = commandArgs(trailingOnly=TRUE)
 
 input.dir<-args[[1]]
 
-filt.file.list<-list.files(path=input.dir, pattern="*filt_*", full.names = TRUE)
+filt.file.list<-list.files(path=input.dir, pattern="*filt_var*", full.names = TRUE)
 print(filt.file.list)
 
-wl.file.list<-list.files(path=input.dir, pattern="*wl_*", full.names=TRUE)
+wl.file.list<-list.files(path=input.dir, pattern="*wl_var*", full.names=TRUE)
 print(wl.file.list)
 #wl.file.list<-args[[2]]
 
