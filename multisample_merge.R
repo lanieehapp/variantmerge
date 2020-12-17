@@ -71,7 +71,6 @@ for( i in 1:length(wl.file.list)){
   print(i)
   curr.samp<-read.delim(wl.file.list[i], header=TRUE, sep="\t")
   
-  colnames(curr.samp)[1]<-"CHROM_POS_REF_ALT"
   
   #long form - just concatenate all rows, each row represents one sample-variant pair
   if(exists("wl.long.form")){
