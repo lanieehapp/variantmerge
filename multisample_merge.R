@@ -16,7 +16,7 @@ print(wl.file.list)
 
 for( i in 1:length(filt.file.list)){
   print(i)
-  curr.samp<-read.table(filt.file.list[i], header=TRUE, sep="\t")
+  curr.samp<-read.delim(filt.file.list[i], header=TRUE, sep="\t")
   
  
     
