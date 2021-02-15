@@ -19,10 +19,19 @@ for( i in 1:length(filt.file.list)){
   curr.samp<-read.delim(filt.file.list[i], header=TRUE, sep="\t", check.names = FALSE)
   
  
+  
+  
     
   #long form - just concatenate all rows, each row represents one sample-variant pair
   if(exists("long.form")){
-    long.form<-rbind(long.form, curr.samp)
+    
+    ##check to make sure correct number of columns, if not, report but continue merging other files --KNOWN ISSUE: when first variant is an indel, column order/number may not be correct, debugging in progress, wide form merge still works logically
+    if(ncol(curr.samp)==ncol(long.form)){
+      long.form<-rbind(long.form, curr.samp)
+    }
+    if(ncol(curr.samp)!=ncol(long.form)){
+      print(paste0("Wrong number of columns in output file: ", filt.file.list[i]))
+    }
   }
   if(!(exists("long.form"))){
     long.form<-curr.samp
