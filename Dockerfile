@@ -29,7 +29,6 @@ RUN apt-get update -y && apt-get install -y \
     bsdmainutils \
     bedtools \
     gcc-8-base \
-    libmpx2 \		
     bedops \
     tabix \
     libcurl4-gnutls-dev \
