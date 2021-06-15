@@ -16,11 +16,12 @@ print(wl.file.list)
 #define misbehaving columns - columns that only exist for indels --> put at end of dataframe
 
 bad_cols<-c("SNVHPOL", "HC_BaseQRankSum", "HC_ClippingRankSum", "HC_MQRankSum", "HC_ReadPosRankSum", "S2_SNVHPOL", "S2_CIGAR", "S2_RU", "S2_REFREP", "S2_IDREP", "S2_DPI", "S2_AD", "S2_ADF", "S2_ADR", "S2_FT", "S2_PL", "S2_PS", "Sample_ID")
+really_bad_col<-"DV_VAF.PL"
 
 for( i in 1:length(filt.file.list)){
   print(i)
   curr.samp<-read.delim(filt.file.list[i], header=TRUE, sep="\t", check.names = FALSE)
-  
+  curr.samp<-curr.samp[,!(colnames(curr.samp)==really_bad_col)]
  
   curr.samp.good<-curr.samp[,!(colnames(curr.samp) %in% bad_cols)]
   curr.samp.bad<-curr.samp[,colnames(curr.samp) %in% bad_cols]
