@@ -86,6 +86,7 @@ write.table(wide.form, file=args[3], row.names = FALSE, quote = FALSE, sep="\t")
 for( i in 1:length(wl.file.list)){
   print(i)
   curr.samp<-read.delim(wl.file.list[i], header=TRUE, sep="\t", check.names = FALSE)
+  curr.samp<-curr.samp[,!(colnames(curr.samp)==really_bad_col)]
   
   if(nrow(curr.samp)>0){
     #long form - just concatenate all rows, each row represents one sample-variant pair
