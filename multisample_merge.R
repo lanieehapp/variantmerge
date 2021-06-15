@@ -13,16 +13,19 @@ wl.file.list<-list.files(path=input.dir, pattern="*wl_var*", full.names=TRUE)
 print(wl.file.list)
 #wl.file.list<-args[[2]]
 
-#define misbehaving columns - columns that only exist for indels, causes merging error when first variant is an indel - current solution: remove these columns from all samples
+#define misbehaving columns - columns that only exist for indels --> put at end of dataframe
 
-#bad_cols<-c("SNVHPOL", "HC_BaseQRankSum", "HC_ClippingRankSum", "HC_MQRankSum", "HC_ReadPosRankSum", "S2_SNVHPOL", "S2_CIGAR", "S2_RU", "S2_REFREP", "S2_IDREP", "S2_DPI", "S2_AD", "S2_ADF", "S2_ADR", "S2_FT", "S2_PL", "S2_PS")
+bad_cols<-c("SNVHPOL", "HC_BaseQRankSum", "HC_ClippingRankSum", "HC_MQRankSum", "HC_ReadPosRankSum", "S2_SNVHPOL", "S2_CIGAR", "S2_RU", "S2_REFREP", "S2_IDREP", "S2_DPI", "S2_AD", "S2_ADF", "S2_ADR", "S2_FT", "S2_PL", "S2_PS", "Sample_ID")
 
 for( i in 1:length(filt.file.list)){
   print(i)
   curr.samp<-read.delim(filt.file.list[i], header=TRUE, sep="\t", check.names = FALSE)
   
  
-  #curr.samp<-curr.samp[,!(colnames(curr.samp) %in% bad_cols)]
+  curr.samp.good<-curr.samp[,!(colnames(curr.samp) %in% bad_cols)]
+  curr.samp.bad<-curr.samp[,colnames(curr.samp) %in% bad_cols]
+  
+  curr.samp<-cbind(curr.samp.good, curr.samp.bad)
   
     
   #long form - just concatenate all rows, each row represents one sample-variant pair
