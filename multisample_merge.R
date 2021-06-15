@@ -87,42 +87,44 @@ for( i in 1:length(wl.file.list)){
   print(i)
   curr.samp<-read.delim(wl.file.list[i], header=TRUE, sep="\t", check.names = FALSE)
   
-  
-  #long form - just concatenate all rows, each row represents one sample-variant pair
-  if(exists("wl.long.form")){
-    wl.long.form<-rbind(wl.long.form, curr.samp)
+  if(nrow(curr.samp)>0){
+    #long form - just concatenate all rows, each row represents one sample-variant pair
+    if(exists("wl.long.form")){
+      wl.long.form<-rbind(wl.long.form, curr.samp)
+    }
+    if(!(exists("wl.long.form"))){
+      wl.long.form<-curr.samp
+    }  
+    
+    
+    #wide form - merge variants - each row represents one variants and each sample has their own columns (nCallers, AF, depth)
+    if(exists("wl.wide.form.fixed")){
+      
+      fixed<-curr.samp[,1:139]
+      samp<-cbind(curr.samp$CHROM_POS_REF_ALT, curr.samp[,grepl("nCallers|afMax|dpMax|DNA_", colnames(curr.samp))])
+      id<-curr.samp$Sample_ID[1]
+      
+      colnames(samp)[1]<-"CHROM_POS_REF_ALT"
+      colnames(samp)[2:7]<-paste(id, colnames(samp[,2:7]))
+      
+      wl.wide.form.fixed<-unique(rbind(wl.wide.form.fixed, fixed))
+      
+      wl.wide.form.samp<-merge(x=wl.wide.form.samp, y=samp, by="CHROM_POS_REF_ALT", all.x=TRUE, all.y=TRUE)
+      
+    }
+    if(!(exists("wl.wide.form.fixed"))){
+      
+      wl.wide.form.fixed<-curr.samp[,1:139]
+      samp<-cbind(curr.samp$CHROM_POS_REF_ALT, curr.samp[,grepl("nCallers|afMax|dpMax|DNA_", colnames(curr.samp))])
+      id<-curr.samp$Sample_ID[1]
+      
+      colnames(samp)[1]<-"CHROM_POS_REF_ALT"
+      colnames(samp)[2:7]<-paste(id, colnames(samp[,2:7]))
+      
+      wl.wide.form.samp<-samp
+    }  
   }
-  if(!(exists("wl.long.form"))){
-    wl.long.form<-curr.samp
-  }  
   
-  
-  #wide form - merge variants - each row represents one variants and each sample has their own columns (nCallers, AF, depth)
-  if(exists("wl.wide.form.fixed")){
-    
-    fixed<-curr.samp[,1:139]
-    samp<-cbind(curr.samp$CHROM_POS_REF_ALT, curr.samp[,grepl("nCallers|afMax|dpMax|DNA_", colnames(curr.samp))])
-    id<-curr.samp$Sample_ID[1]
-    
-    colnames(samp)[1]<-"CHROM_POS_REF_ALT"
-    colnames(samp)[2:7]<-paste(id, colnames(samp[,2:7]))
-    
-    wl.wide.form.fixed<-unique(rbind(wl.wide.form.fixed, fixed))
-    
-    wl.wide.form.samp<-merge(x=wl.wide.form.samp, y=samp, by="CHROM_POS_REF_ALT", all.x=TRUE, all.y=TRUE)
-    
-  }
-  if(!(exists("wl.wide.form.fixed"))){
-    
-    wl.wide.form.fixed<-curr.samp[,1:139]
-    samp<-cbind(curr.samp$CHROM_POS_REF_ALT, curr.samp[,grepl("nCallers|afMax|dpMax|DNA_", colnames(curr.samp))])
-    id<-curr.samp$Sample_ID[1]
-    
-    colnames(samp)[1]<-"CHROM_POS_REF_ALT"
-    colnames(samp)[2:7]<-paste(id, colnames(samp[,2:7]))
-    
-    wl.wide.form.samp<-samp
-  }  
   
   
 }
