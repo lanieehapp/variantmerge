@@ -21,7 +21,7 @@ really_bad_col<-c("DV_VAF.PL", "SNVPOL", "S2_CIGAR", "S2_RU", "S2_REFREP", "S2_I
 for( i in 1:length(filt.file.list)){
   print(i)
   curr.samp<-read.delim(filt.file.list[i], header=TRUE, sep="\t", check.names = FALSE)
-  curr.samp<-curr.samp[,!(colnames(curr.samp)==really_bad_col)]
+  curr.samp<-curr.samp[,!(colnames(curr.samp) %in% really_bad_col)]
  
   curr.samp.good<-curr.samp[,!(colnames(curr.samp) %in% bad_cols)]
   curr.samp.bad<-curr.samp[,colnames(curr.samp) %in% bad_cols]
@@ -86,7 +86,7 @@ write.table(wide.form, file=args[3], row.names = FALSE, quote = FALSE, sep="\t")
 for( i in 1:length(wl.file.list)){
   print(i)
   curr.samp<-read.delim(wl.file.list[i], header=TRUE, sep="\t", check.names = FALSE)
-  curr.samp<-curr.samp[,!(colnames(curr.samp)==really_bad_col)]
+  curr.samp<-curr.samp[,!(colnames(curr.samp) %in% really_bad_col)]
   
   if(nrow(curr.samp)>0){
     #long form - just concatenate all rows, each row represents one sample-variant pair
