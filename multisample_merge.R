@@ -27,10 +27,13 @@ for( i in 1:length(filt.file.list)){
   curr.samp.bad<-curr.samp[,colnames(curr.samp) %in% bad_cols]
   
   if("SNVHPOL" %in% colnames(curr.samp.bad)){
-    colnames(curr.samp.bad)[colnames(curr.samp.bad)=="SNVHPOL"]<-"S2_SNVHPOL"
+    #colnames(curr.samp.bad)[colnames(curr.samp.bad)=="SNVHPOL"]<-"S2_SNVHPOL"
     
     correct_order<-cbind(curr.samp.bad[,2:5], curr.samp.bad[,1], curr.samp.bad[,11:15], curr.samp.bad[,10], curr.samp.bad[,16])
     curr.samp.bad<-correct_order
+    colnames(curr.samp.bad)[5]<-"S2_SNVHPOL"
+    colnames(curr.samp.bad)[11]<-"S2_DPI"
+    colnames(curr.samp.bad)[12]<-"S2_PS"
   }
   
   curr.samp<-cbind(curr.samp.good, curr.samp.bad)
